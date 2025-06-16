@@ -1,6 +1,6 @@
 // import React, { useState } from 'react';
 
-// const Services = () => {
+// const Services = ({ animationsEnabled }) => {
 //   const services = [
 //     {
 //       id: 1,
@@ -31,8 +31,8 @@
 //           {services.map((service, index) => (
 //             <article 
 //               key={service.id} 
-//               className={`flex flex-col items-center text-center max-w-xs mx-auto animate-slide-in-up`}
-//               style={{ animationDelay: `${index * 0.2}s` }}
+//               className={`flex flex-col items-center text-center max-w-xs mx-auto ${animationsEnabled ? 'animate-slide-in-up' : ''}`}
+//               style={{ animationDelay: animationsEnabled ? `${index * 0.2}s` : '0s' }}
 //               onMouseEnter={() => setHoveredService(service.id)}
 //               onMouseLeave={() => setHoveredService(null)}
 //             >
@@ -73,8 +73,15 @@
 
 
 import React, { useState } from 'react';
+import useIntersectionObserver from '../utils/useIntersectionObserver';
 
-const Services = ({ animationsEnabled }) => {
+const Services = () => {
+  const [ref, isVisible] = useIntersectionObserver({
+    threshold: 0.1,
+    triggerOnce: true
+  });
+  const [hoveredService, setHoveredService] = useState(null);
+
   const services = [
     {
       id: 1,
@@ -96,17 +103,15 @@ const Services = ({ animationsEnabled }) => {
     }
   ];
 
-  const [hoveredService, setHoveredService] = useState(null);
-
   return (
-    <div className="bg-white text-secondary py-16">
+    <div ref={ref} className="bg-white text-secondary py-16">
       <div className="max-w-7xl mx-auto px-6">
         <section className="grid grid-cols-1 sm:grid-cols-3 gap-x-20 gap-y-12 justify-center">
           {services.map((service, index) => (
             <article 
               key={service.id} 
-              className={`flex flex-col items-center text-center max-w-xs mx-auto ${animationsEnabled ? 'animate-slide-in-up' : ''}`}
-              style={{ animationDelay: animationsEnabled ? `${index * 0.2}s` : '0s' }}
+              className={`flex flex-col items-center text-center max-w-xs mx-auto ${isVisible ? 'animate-slide-in-up' : ''}`}
+              style={{ animationDelay: isVisible ? `${index * 0.2}s` : '0s' }}
               onMouseEnter={() => setHoveredService(service.id)}
               onMouseLeave={() => setHoveredService(null)}
             >

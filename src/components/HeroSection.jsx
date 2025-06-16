@@ -1,6 +1,6 @@
 // import React from 'react';
 
-// const HeroSection = () => {
+// const HeroSection = ({ animationsEnabled }) => {
 //   return (
 //     <main className="flex flex-col min-h-[calc(100vh-64px)] font-inter overflow-hidden">
 //       <section
@@ -18,10 +18,10 @@
 //           <img
 //             src="https://preview.colorlib.com/theme/tailor/assets/img/hero/hero-icon.png.webp"
 //             alt="Rotating Icon"
-//             className="absolute -top-10 md:-top-28 left-1/2 -translate-x-1/2 md:left-0 w-22 h-22 animate-spin-slow rounded-full"
+//             className={`absolute -top-10 md:-top-28 left-1/2 -translate-x-1/2 md:left-0 w-22 h-22 rounded-full ${animationsEnabled ? 'animate-spin-slow' : ''}`}
 //             onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/80x80/000000/FFFFFF?text=Icon'; }}
 //           />
-//           <div className="animate-slide-in-left">
+//           <div className={animationsEnabled ? 'animate-slide-in-left' : ''}>
 //             <h1 className="text-[52px] md:text-[76px] font-semibold leading-[1.1] mb-6 mt-16 md:mt-0" style={{fontFamily:'Josefin Sans'}}>
 //               We make cloths
 //               <br />
@@ -38,7 +38,7 @@
 //           </div>
 //         </div>
 
-//         <div className="relative z-10 flex-1 flex justify-center items-center animate-slide-in-right">
+//         <div className={`relative z-10 flex-1 flex justify-center items-center ${animationsEnabled ? 'animate-slide-in-right' : ''}`}>
 //           <img
 //             alt="Woman measuring fabric on a black mannequin in a tailor shop with shelves of fabric in the background"
 //             className="w-full h-auto object-cover rounded-md shadow-xl max-h-[100vh] hover:shadow-2xl transition-shadow"
@@ -63,10 +63,19 @@
 
 
 import React from 'react';
+import useIntersectionObserver from '../utils/useIntersectionObserver';
 
-const HeroSection = ({ animationsEnabled }) => {
+const HeroSection = () => {
+  const [ref, isVisible] = useIntersectionObserver({
+    threshold: 0.1,
+    triggerOnce: true
+  });
+
   return (
-    <main className="flex flex-col min-h-[calc(100vh-64px)] font-inter overflow-hidden">
+    <main 
+      ref={ref}
+      className="flex flex-col min-h-[calc(100vh-64px)] font-inter overflow-hidden"
+    >
       <section
         className="relative flex flex-col md:flex-row flex-1 p-8 md:p-16 lg:p-24 justify-center items-center rounded-lg overflow-hidden"
         style={{
@@ -82,10 +91,10 @@ const HeroSection = ({ animationsEnabled }) => {
           <img
             src="https://preview.colorlib.com/theme/tailor/assets/img/hero/hero-icon.png.webp"
             alt="Rotating Icon"
-            className={`absolute -top-10 md:-top-28 left-1/2 -translate-x-1/2 md:left-0 w-22 h-22 rounded-full ${animationsEnabled ? 'animate-spin-slow' : ''}`}
+            className={`absolute -top-10 md:-top-28 left-1/2 -translate-x-1/2 md:left-0 w-22 h-22 rounded-full ${isVisible ? 'animate-spin-slow' : ''}`}
             onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/80x80/000000/FFFFFF?text=Icon'; }}
           />
-          <div className={animationsEnabled ? 'animate-slide-in-left' : ''}>
+          <div className={isVisible ? 'animate-slide-in-left' : ''}>
             <h1 className="text-[52px] md:text-[76px] font-semibold leading-[1.1] mb-6 mt-16 md:mt-0" style={{fontFamily:'Josefin Sans'}}>
               We make cloths
               <br />
@@ -102,7 +111,7 @@ const HeroSection = ({ animationsEnabled }) => {
           </div>
         </div>
 
-        <div className={`relative z-10 flex-1 flex justify-center items-center ${animationsEnabled ? 'animate-slide-in-right' : ''}`}>
+        <div className={`relative z-10 flex-1 flex justify-center items-center ${isVisible ? 'animate-slide-in-right' : ''}`}>
           <img
             alt="Woman measuring fabric on a black mannequin in a tailor shop with shelves of fabric in the background"
             className="w-full h-auto object-cover rounded-md shadow-xl max-h-[100vh] hover:shadow-2xl transition-shadow"
