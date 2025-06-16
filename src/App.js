@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Navbar from './components/Navbar';
+import HeroSection from './components/HeroSection';
+import Services from './components/Services';
+import AboutSection from './components/AboutSection';
+import WhyChooseUs from './components/WhyChooseUs';
+import VideoSection from './components/VideoSection';
+import Testimonial from './components/Testimonial';
+import InstagramSection from './components/InstagramSection';
+import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="bg-white">
+      <Navbar />
+      <HeroSection />
+      <Services />
+      <AboutSection />
+      <WhyChooseUs />
+      <VideoSection />
+      <Testimonial />
+      <InstagramSection />
+      <Footer />
+      <ScrollToTop />
     </div>
   );
 }
