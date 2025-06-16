@@ -35,9 +35,13 @@
 //         </p>
 //         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-10 gap-y-12 max-w-6xl mx-auto text-left">
 //           {features.map((feature, index) => (
-//             <div key={index} className="flex flex-col items-center">
+//             <div 
+//               key={index} 
+//               className="flex flex-col items-center animate-slide-in-up"
+//               style={{ animationDelay: `${index * 0.1}s` }}
+//             >
 //               <img alt={feature.title} className="mb-4 h-12 w-12" src={feature.icon} />
-//               <h3 className="font-semibold text-lg mb-3">{feature.title}</h3>
+//               <h3 className="font-semibold text-lg mb-3 hover:text-accent transition-colors">{feature.title}</h3>
 //               <p className="text-sm leading-relaxed max-w-xs">
 //                 {feature.description}
 //               </p>
@@ -52,9 +56,10 @@
 // export default WhyChooseUs;
 
 
+
 import React from 'react';
 
-const WhyChooseUs = () => {
+const WhyChooseUs = ({ animationsEnabled }) => {
   const features = [
     {
       icon: "https://preview.colorlib.com/theme/tailor/assets/img/icon/services1.svg",
@@ -91,8 +96,8 @@ const WhyChooseUs = () => {
           {features.map((feature, index) => (
             <div 
               key={index} 
-              className="flex flex-col items-center animate-slide-in-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className={`flex flex-col items-center ${animationsEnabled ? 'animate-slide-in-up' : ''}`}
+              style={{ animationDelay: animationsEnabled ? `${index * 0.1}s` : '0s' }}
             >
               <img alt={feature.title} className="mb-4 h-12 w-12" src={feature.icon} />
               <h3 className="font-semibold text-lg mb-3 hover:text-accent transition-colors">{feature.title}</h3>
